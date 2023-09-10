@@ -1,0 +1,29 @@
+<h1>New Booking</h1>
+<% if @booking.errors.any? %>
+  <div style="color: red">
+    <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+    <ul>
+      <% @booking.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<p>Please enter your details: </p>
+<%= form_with model: @booking do |f| %>
+  <%= f.hidden_field :flight_id, value: @booking.flight_id%>
+  <%= f.fields_for :passengers do |p_f| %>
+    <div class="passenger_fields">
+      <!-- Passenger fields here -->
+      <%= p_f.label :name, "Enter passenger name: "%>
+      <%= p_f.text_field :name %>
+      <br>
+      <%= p_f.label :email, "Enter passenger email: " %>
+      <%= p_f.email_field :email %>
+    </div>
+    <br>
+    <br>
+  <% end %>
+  <%= f.submit "Create Bookings" %>
+<% end %>

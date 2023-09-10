@@ -1,0 +1,16 @@
+<h1>Booking id: <%= @booking.id %></h1>
+<h2>Flight details -</h2>
+<p>Flight no: <%= @flight.id %> </p>
+<p>Departure airport: <%= @flight.departure_airport.name %> </p>
+<p>Arrival airport: <%= @flight.arrival_airport.name %> </p>
+<p>Departure date: <%= @flight.departure_time.strftime('%a, %d %b %Y %I:%M:%S %p') %> </p>
+<p>Approx travel time: <%= @flight.flight_hour %> </p>
+
+<h2>Passenger details -</h2>
+
+<% @booking.passengers.each_with_index do |passenger,index| %>
+  <div class="passenger_details" style = "border: 2px solid green; padding: 10px">
+    <p>Passenger no.: <%= index+1 %></p>
+    <%= render passenger %>
+  </div>
+<% end %>

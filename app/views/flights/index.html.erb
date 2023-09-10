@@ -1,0 +1,44 @@
+<h1>Welcome to flight booker</h1>
+<p>Search and book flights</p>
+
+<%= form_with scope: :search, url: flights_path, method: :get do |f| %>
+  <%= f.label :departure, "Select departure airport"%>
+  <%= f.select(:departure, @airports) %>
+  <br>
+  <br>
+  <%= f.label :arrival, "Select destination airport"%>
+  <%= f.select(:arrival, @airports) %>
+  <br>
+  <br>
+  <%= f.label :passenger_count, "Number of passenger" %>
+  <%= f.number_field :passenger_count, in: 1..4%>
+  <br>
+  <br>
+  <%= f.label :departure_date%>
+  <%= f.date_field :departure_date%>
+  <br>
+  <br>
+  <%= f.submit "Search flights" %>
+<% end %>
+
+<% if @search.present? %>
+  <% if @flight.present? %>
+    <% if @number_of_flights == 1 %>
+      <h2><%= "There is 1 flight available" %></h2>
+    <% else %>
+      <h2><%= "There are #{@number_of_flights} flights available" %></h2>
+    <% end %>
+    <%= form_with scope: :flight, url: new_booking_path, method: :get do |form| %>
+      <%=form.hidden_field :passenger_count, value: params[:search][:passenger_count]%>
+      <% @flight.each do |fl|%>
+        <%= form.radio_button :id, fl.id%>
+        <%= form.label :id ,  "#{fl.code} - #{fl.departure_time} - #{pluralize(fl.flight_hour.to_i, "hour")}", value: fl.id %>
+        <br>
+      <% end %>
+      <br>
+      <%= form.submit "Book this flight"%>
+    <% end %>
+  <% else %>
+    <p>Sorry there are no flight available for this date</p>
+  <% end %>
+<% end %>
