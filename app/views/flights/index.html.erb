@@ -42,3 +42,12 @@
     <p>Sorry there are no flight available for this date</p>
   <% end %>
 <% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  flatpickr('#search_departure_date', {
+    enable: <%= raw @dates.to_json %>,
+    dateFormat: "F j, Y"
+  })
+  })
+</script>
