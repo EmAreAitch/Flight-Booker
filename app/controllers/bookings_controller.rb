@@ -2,12 +2,9 @@ class BookingsController < ApplicationController
   def new
     filt_params = set_params
     flight = Flight.find(filt_params[:id])
-    num_passengers = filt_params[:passenger_count].to_i
+    @num_passengers = filt_params[:passenger_count].to_i
     @booking = flight.bookings.build
     @flight_id = flight.id
-    num_passengers.times do
-      @booking.passengers.build
-    end
   end
 
   def show

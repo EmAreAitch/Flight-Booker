@@ -11,19 +11,44 @@
   </div>
 <% end %>
 <p>Please enter your details: </p>
-<%= form_with model: @booking do |f| %>
+<%= form_with model: @booking, data: {controller: 'passenger-form', passenger_form_count_value: @num_passengers} do |f| %>
   <%= f.hidden_field :flight_id, value: @booking.flight_id%>
-  <%= f.fields_for :passengers do |p_f| %>
-    <div class="passenger_fields">
-      <!-- Passenger fields here -->
-      <%= p_f.label :name, "Enter passenger name: "%>
-      <%= p_f.text_field :name %>
-      <br>
-      <%= p_f.label :email, "Enter passenger email: " %>
-      <%= p_f.email_field :email %>
-    </div>
-    <br>
-    <br>
-  <% end %>
+  <div data-passenger-form-target="passengers">
+    <% @num_passengers.times do %>
+      <div class="passenger_fields">
+        <%= f.fields_for :passengers, Passenger.new do |p_f| %>
+          <!-- Passenger fields here -->
+          <%= p_f.label :name, "Enter passenger name: "%>
+          <%= p_f.text_field :name %>
+          <br>
+          <%= p_f.label :email, "Enter passenger email: " %>
+          <%= p_f.email_field :email %>
+          <br>
+          <br>
+        <% end %>
+        <button type="button" data-action="passenger-form#removePassenger">Remove passenger</button>
+        <br>
+        <br>
+      </div>
+    <% end %>
+    <template>
+      <div class="passenger_fields">
+        <%= f.fields_for :passengers, Passenger.new, child_index: 'INDEX' do |p_f| %>
+          <!-- Passenger fields here -->
+          <%= p_f.label :name, "Enter passenger name: "%>
+          <%= p_f.text_field :name %>
+          <br>
+          <%= p_f.label :email, "Enter passenger email: " %>
+          <%= p_f.email_field :email %>
+          <br>
+          <br>
+        <% end %>
+        <button type="button" data-action="passenger-form#removePassenger">Remove passenger</button>
+        <br>
+        <br>
+      </div>
+    </template>
+  </div>
+  <button type="button" data-action="passenger-form#addPassenger">Add passenger</button>
   <%= f.submit "Create Bookings" %>
 <% end %>

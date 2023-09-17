@@ -6,7 +6,7 @@
   <%= f.select(:departure, @airports) %>
   <br>
   <br>
-  <%= f.label :arrival, "Select destination airport"%>
+  <%= f.label :arrival, "Select arrival airport"%>
   <%= f.select(:arrival, @airports) %>
   <br>
   <br>
@@ -15,7 +15,7 @@
   <br>
   <br>
   <%= f.label :departure_date%>
-  <%= f.date_field :departure_date%>
+  <%= f.date_field :departure_date,placeholder: "Select Date...", data: {controller: "flatpickr", flatpickr_alt_format: "F j, Y", flatpickr_alt_input: true, flatpickr_enable: @dates }%>
   <br>
   <br>
   <%= f.submit "Search flights" %>
@@ -42,12 +42,3 @@
     <p>Sorry there are no flight available for this date</p>
   <% end %>
 <% end %>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-  flatpickr('#search_departure_date', {
-    enable: <%= raw @dates.to_json %>,
-    dateFormat: "F j, Y"
-  })
-  })
-</script>
