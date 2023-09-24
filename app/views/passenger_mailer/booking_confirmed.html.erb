@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flight Booking Confirmation</title>
+    <style>
+      /* Add your CSS styles here for formatting */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        text-align: center;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 600px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Flight Booking Confirmation</h1>
+      <p>Your flight booking has been successfully confirmed!</p>
+      <h2>Booking Details</h2>
+      <p><strong>Booking id:</strong> <%= @booking.id %></p>
+      <p><strong>Passenger Name:</strong> <%= @passenger.name %></p>
+      <p><strong>Flight:</strong> <%= @flight.code %></p>
+      <p><strong>Departure airport:</strong> <%= @flight.departure_airport.name%></p>
+      <p><strong>Arrival airport:</strong> <%= @flight.arrival_airport.name%></p>
+      <p><strong>Departure Date:</strong> <%= @flight.departure_time.strftime('%a, %d %b %Y %I:%M:%S %p') %></p>
+      <p>Thank you for choosing our airline. Have a great trip!</p>
+    </div>
+  </body>
+</html>

@@ -8,17 +8,20 @@ class BookingsController < ApplicationController
   end
 
   def show
-    @booking = Booking.find(params[:id])
-    @flight = Flight.find(@booking.flight_id)
+    @booking = Booking.includes(:passengers, flight: [:departure_airport, :arrival_airport]).find(params[:id])
+    @passengers = @booking.passengers
+    @flight = @booking.flight
   end
 
   def create
     params = booking_params
-    flight = Flight.find(params[:flight_id])
-    @flight_id = flight.id
-    @booking = flight.bookings.build(params)
-    if @booking.save
-        redirect_to @booking
+    flight = Flight.includes(:departure_airport, :arrival_airport).find(params[:flight_id])
+    booking = flight.bookings.build(params)
+    if booking.save
+        booking.passengers.each do |passenger|
+          PassengerMailer.with(passenger:).booking_confirmed.deliver_later
+        end
+        redirect_to booking
     else
       render 'new', status: :unprocessable_entity
     end

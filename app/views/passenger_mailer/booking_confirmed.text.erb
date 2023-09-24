@@ -1,0 +1,13 @@
+Flight Booking Confirmation
+
+Your flight booking has been successfully confirmed!
+
+Booking Details:
+- Booking ID: <%= @booking.id %>
+- Passenger Name: <%= @passenger.name %>
+- Flight: <%= @flight.code %>
+- Departure Airport: <%= @flight.departure_airport.name%>
+- Arrival Airport: <%= @flight.arrival_airport.name%>
+- Departure Date: <%= @flight.departure_time.strftime('%a, %d %b %Y %I:%M:%S %p') %>
+
+Thank you for choosing our airline. Have a great trip!
